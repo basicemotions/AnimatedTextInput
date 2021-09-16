@@ -12,6 +12,7 @@ public struct AnimatedTextInputFieldConfigurator {
         case customSelection(isRightViewEnabled: Bool, rightViewImage: UIImage?)
         case multiline
         case generic(textInput: TextInput)
+        case digits
     }
     
     static func configure(with type: AnimatedTextInputType) -> TextInput {
@@ -34,6 +35,8 @@ public struct AnimatedTextInputFieldConfigurator {
             return textInput
         case .customSelection(let isRightViewEnabled, let rightViewImage):
             return AnimatedTextInputCustomSelectionConfigurator.generate(isRightViewEnabled: isRightViewEnabled, rightViewImage: rightViewImage)
+        case .digits:
+            return AnimatedTextInputDigitsConfigurator.generate()
         }
     }
 }
@@ -96,6 +99,18 @@ fileprivate struct AnimatedTextInputNumericConfigurator {
         return textField
     }
 }
+
+fileprivate struct AnimatedTextInputDigitsConfigurator {
+
+    static func generate() -> TextInput {
+        let textField = AnimatedTextField()
+        textField.clearButtonMode = .whileEditing
+        textField.keyboardType = .numberPad
+        textField.autocorrectionType = .no
+        return textField
+    }
+}
+
 
 fileprivate struct AnimatedTextInputPhoneConfigurator {
     
